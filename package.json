@@ -1,1 +1,22 @@
+{
+  "name": "claims-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered forensic engineering report generator with feedback stored in Supabase, plus periodic fine-tuning on GPT-3.5",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build step needed' && exit 0",
+    "fine-tune": "node gather-and-finetune.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "openai": "^4.0.0",
+    "@supabase/supabase-js": "^2.10.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
 
