@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Claims Assistant Demo</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Claims Assistant Demo</h1>
+
+  <div>
+    <label>Address:</label>
+    <input type="text" id="address" placeholder="123 Main St" />
+  </div>
+  <div>
+    <label>Date of Loss:</label>
+    <input type="date" id="dateOfLoss" />
+  </div>
+  <div>
+    <label>Section to Generate:</label>
+    <select id="sectionSelect">
+      <option value="Introduction">Introduction</option>
+      <option value="Observations">Observations</option>
+      <option value="Conclusions">Conclusions</option>
+    </select>
+  </div>
+
+  <button id="generateBtn">Generate Section</button>
+
+  <hr/>
+
+  <h2>Generated Output</h2>
+  <div id="outputArea" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 1em; min-height: 100px;">
+    <!-- GPT text goes here -->
+  </div>
+
+  <div id="ratingArea" class="hidden">
+    <h3>Rate This Section (1-7)</h3>
+    <div>
+      <input type="radio" name="rating" value="1" />1
+      <input type="radio" name="rating" value="2" />2
+      <input type="radio" name="rating" value="3" />3
+      <input type="radio" name="rating" value="4" />4
+      <input type="radio" name="rating" value="5" />5
+      <input type="radio" name="rating" value="6" />6
+      <input type="radio" name="rating" value="7" />7
+    </div>
+    <textarea id="feedbackBox" rows="4" cols="50" placeholder="Leave additional comments here..."></textarea>
+    <br/>
+    <button id="submitRatingBtn">Submit Rating</button>
+  </div>
+
+  <script>
+    let lastGeneratedText = '';
+
+    document.getElementById('generateBtn').addEventListener('click', async () => {
+      const address = document.getElementById('address').value;
+      const dateOfLoss = document.getElementById('dateOfLoss').value;
+      const section = document.getElementById('sectionSelect').value;
+
+      // Minimal example of calling your netlify function
+      const response = await fetch('/.netlify/functions/generate-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          section,
+          context: { address, dateOfLoss }
+        })
+      });
+      const data = await response.json();
+      lastGeneratedText = data.section || 'No output';
+      document.getElementById('outputArea').textContent = lastGeneratedText;
+
+      // Show rating area
+      document.getElementById('ratingArea').classList.remove('hidden');
+    });
+
+    // Submit rating to store-feedback
+    document.getElementById('submitRatingBtn').addEventListener('click', async () => {
+      // find selected rating
+      const radios = document.getElementsByName('rating');
+      let ratingVal = null;
+      for (let r of radios) {
+        if (r.checked) {
+          ratingVal = r.value;
+        }
+      }
+      if (!ratingVal) {
+        alert('Please select a rating (1-7).');
+        return;
+      }
+
+      const feedback = document.getElementById('feedbackBox').value || '';
+      // We store the "section" from the dropdown as "sectionId", plus the lastGeneratedText
+      const timestamp = new Date().toISOString();
+
+      const body = {
+        sectionId: document.getElementById('sectionSelect').value,
+        rating: ratingVal,
+        feedback: feedback,
+        generatedText: lastGeneratedText,
+        timestamp
+      };
+
+      try {
+        const resp = await fetch('/.netlify/functions/store-feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const result = await resp.json();
+        console.log('Feedback stored result:', result);
+        alert('Thank you for your feedback!');
+      } catch (err) {
+        console.error('Error storing rating:', err);
+        alert('Failed to store rating.');
+      }
+    });
+  </script>
+</body>
+</html>
 
