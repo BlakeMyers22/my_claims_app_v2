@@ -5,35 +5,15 @@ const OpenAI = require('openai');
 const axios = require('axios');
 
 /**
- * We reference an environment variable FINE_TUNED_MODEL_NAME
- * which we will update after each new fine-tune completes.
- * If it's empty, default to "gpt-3.5-turbo".
+ * If a new model name is placed into Netlify env var FINE_TUNED_MODEL_NAME,
+ * we use it, else default to 'gpt-3.5-turbo'.
  */
 const MODEL_NAME = process.env.FINE_TUNED_MODEL_NAME || 'gpt-3.5-turbo';
 
-/**
- * Initialize OpenAI with your API key.
- * Ensure OPENAI_API_KEY is set in your Netlify environment.
- */
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-/**
- * Utility function: Safely convert a value to a string,
- * returning fallback if it's null/undefined or empty.
- */
-function safeString(value, fallback = '') {
-  if (typeof value === 'string' && value.trim() !== '') {
-    return value;
-  }
-  return fallback;
-}
-
-/**
- * Utility function: Safely parse a date.
- * If parsing fails or the input is missing, return null.
- */
 function safeParseDate(dateString) {
   if (!dateString) return null;
   const d = new Date(dateString);
@@ -41,9 +21,7 @@ function safeParseDate(dateString) {
   return d;
 }
 
-/**
- * Example of how you'd do a simple weather call (optional).
- */
+// Example weather call, optional
 async function getWeatherData(location, dateString) {
   try {
     if (!location || !dateString) {
@@ -53,14 +31,12 @@ async function getWeatherData(location, dateString) {
     if (!dateObj) {
       return { success: true, data: {} };
     }
-    const today = new Date();
-    if (dateObj > today) {
-      return {
-        success: true,
-        data: { note: `Weather data not found for future date: ${dateObj.toISOString().split('T')[0]}` }
-      };
+    // if date is future
+    const now = new Date();
+    if (dateObj > now) {
+      return { success: true, data: { note: `Future date: ${dateString}` } };
     }
-    // Suppose you have a WEATHER_API_KEY in Netlify as well
+    // If you have an API key for WeatherAPI in Netlify
     const response = await axios.get('http://api.weatherapi.com/v1/history.json', {
       params: {
         key: process.env.WEATHER_API_KEY,
@@ -68,47 +44,37 @@ async function getWeatherData(location, dateString) {
         dt: dateObj.toISOString().split('T')[0]
       }
     });
-
     const dayData = response.data.forecast.forecastday[0].day;
     return {
       success: true,
       data: {
         maxTemp: `${dayData.maxtemp_f}°F`,
         minTemp: `${dayData.mintemp_f}°F`,
-        avgTemp: `${dayData.avgtemp_f}°F`,
-        conditions: dayData.condition.text
+        condition: dayData.condition.text
       }
     };
   } catch (err) {
-    console.error('Weather API Error:', err);
+    console.error('Weather error:', err);
     return { success: false, error: err.message };
   }
 }
 
-/**
- * Build the prompt for the user request, for demonstration.
- */
-async function buildPrompt(section, context, weatherData) {
-  let basePrompt = `You are a forensic engineering assistant. The user wants: ${section}. `;
-
-  // Simple example: If user provided dateOfLoss & location, we mention it.
-  if (context.dateOfLoss && context.address) {
-    basePrompt += `The date of loss: ${context.dateOfLoss}, address: ${context.address}. `;
+// Simple prompt builder
+function buildPrompt(section, context, weatherData) {
+  let prompt = `You are a forensic engineering assistant. The user wants a section: ${section}.\n`;
+  if (context.address) {
+    prompt += `Address: ${context.address}\n`;
   }
-
-  // If we have weather data:
-  if (weatherData && weatherData.conditions) {
-    basePrompt += `Weather was: ${weatherData.conditions}. `;
+  if (context.dateOfLoss) {
+    prompt += `Date of Loss: ${context.dateOfLoss}\n`;
   }
-
-  basePrompt += `Now write a professional section.`;
-
-  return basePrompt;
+  if (weatherData?.condition) {
+    prompt += `Weather condition: ${weatherData.condition}\n`;
+  }
+  prompt += `Write a concise, professional report section.\n`;
+  return prompt;
 }
 
-/**
- * Netlify serverless function entry point
- */
 exports.handler = async function(event) {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -117,11 +83,7 @@ exports.handler = async function(event) {
   };
 
   if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers,
-      body: ''
-    };
+    return { statusCode: 200, headers, body: '' };
   }
 
   try {
@@ -134,30 +96,25 @@ exports.handler = async function(event) {
       };
     }
 
-    // Optionally fetch weather
+    // optional weather fetch
     let weatherResult = { success: true, data: {} };
     if (context.dateOfLoss && context.address) {
       weatherResult = await getWeatherData(context.address, context.dateOfLoss);
     }
 
-    // Build final prompt
-    const promptText = await buildPrompt(section, context, weatherResult.data);
+    const prompt = buildPrompt(section, context, weatherResult.data);
 
-    // Create the chat completion using our environment's fine-tuned model or fallback
+    // GPT call
     const completion = await openai.chat.completions.create({
-      model: MODEL_NAME,  // <--- this uses the fine-tuned model if set
+      model: MODEL_NAME,
       messages: [
-        {
-          role: 'system',
-          content: promptText
-        }
+        { role: 'system', content: prompt }
       ],
       temperature: 0.0,
       max_tokens: 1000
     });
 
     const result = completion.choices[0].message.content || '';
-
     return {
       statusCode: 200,
       headers,
@@ -168,15 +125,11 @@ exports.handler = async function(event) {
     };
 
   } catch (error) {
-    console.error('Error in generate-report function:', error);
+    console.error('generate-report error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({
-        error: 'Failed to generate report section',
-        details: error.message
-      })
+      body: JSON.stringify({ error: error.message })
     };
   }
 };
-
