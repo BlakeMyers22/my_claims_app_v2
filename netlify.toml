@@ -18,4 +18,3 @@
       style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com;
       script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com;
     """
-
