@@ -8,7 +8,7 @@ const axios = require('axios');
  * If a new model name is placed into Netlify env var FINE_TUNED_MODEL_NAME,
  * we use it, else default to 'gpt-3.5-turbo'.
  */
-const MODEL_NAME = process.env.FINE_TUNED_MODEL_NAME || 'gpt-3.5-turbo';
+const MODEL_NAME = process.env.FINE_TUNED_MODEL_NAME || 'gpt-4o-mini-2024-07-18';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
