@@ -3,7 +3,7 @@ name: Fine-Tune GPT Model
 on:
   workflow_dispatch: {} # allow manual run
   schedule:
-    - cron: '45 0 * * *' # run daily at 00:45 UTC
+    - cron: '35 1 * * *' # run daily at 01:35 UTC
 
 jobs:
   fine-tune-job:
