@@ -1,15 +1,13 @@
 {
   "name": "claims-assistant",
   "version": "1.0.0",
-  "description": "AI-powered forensic engineering report generator with advanced UI + fine-tuning pipeline",
-  "main": "index.js",
+  "description": "Full multi-page form with roof types, final report generation, rating & feedback storing, plus GPT fine-tuning pipeline.",
   "scripts": {
-    "build": "echo \"No build step needed\" && exit 0",
-    "test": "echo \"No tests\" && exit 0"
+    "build": "echo \"No build step needed\" && exit 0"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.10.0",
     "axios": "^1.6.2",
-    "openai": "^4.7.1" 
+    "openai": "^4.7.1"
   }
 }
