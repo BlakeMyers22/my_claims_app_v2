@@ -68,7 +68,7 @@ const { Configuration, OpenAIApi } = require("openai");
     // 5) Start fine-tune on "gpt-4o-mini-2024-07-18" or "gpt-3.5-turbo"? 
     // The user says "openai site says gpt-4o-mini-2024-07-18 is allowed." 
     // We'll assume the user can do that:
-    const baseModel = "gpt-4o-mini-2024-07-18";
+    const baseModel = "gpt-4o-2024-08-06";
 
     console.log(`Starting fine-tune job with base model: ${baseModel}`);
     const ftResp = await openai.createFineTune({
