@@ -50,7 +50,7 @@
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-center mb-8">NSF INSPECTION PROCESS</h1>
 
-    <!-- Main Form (all the fields) -->
+    <!-- Main Form -->
     <div class="bg-white rounded-lg shadow-lg p-6 mb-8" id="intakeContainer">
       <form id="claimForm" class="space-y-6">
         
@@ -152,7 +152,7 @@
             <input type="date" id="dateOfLoss" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700">Causation Date (When the cause occurred, if different)</label>
+            <label class="block text-sm font-medium text-gray-700">Causation Date (If different)</label>
             <input type="date" id="causationDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
             <p class="text-sm text-gray-500 mt-1">Leave blank if same as Date of Loss</p>
           </div>
@@ -240,281 +240,12 @@
             </label>
             <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"></textarea>
           </div>
-
-          <!-- Roof Type section (multiple sub-categories) -->
-          <h3 class="font-bold">Roof Type</h3>
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofMetalCheckbox" />
-            <label class="font-bold">Metal</label>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is this roof aluminum or metal?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalAluminum" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What gauge is the roofing material?
-            </label>
-            <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalGauge">
-              <option value="29">29</option>
-              <option value="28">28</option>
-              <option value="27">27</option>
-              <option value="26">26</option>
-              <option value="25">25</option>
-              <option value="24">24</option>
-            </select>
-          </div>
-          <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">
-              Select all that apply:
-            </label>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <input type="checkbox" class="rounded" id="metalPBR" />
-                <label class="ml-2">PBR Panel</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalSeam" />
-                <label class="ml-2">Standing Seam</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalTrapezoidal" />
-                <label class="ml-2">Trapezoidal</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalCorrugated" />
-                <label class="ml-2">Corrugated</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalDecra" />
-                <label class="ml-2">Decra</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalAluminumShake" />
-                <label class="ml-2">Aluminum Shake</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalOther" />
-                <label class="ml-2">Other (Please specify below)</label>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Additional engineer notes (if "Other")</label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalOtherNotes"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              If it is PBR panel, in which direction is the short lap facing?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="pbrShortLapDirection" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are there gaps in the seam caused by wind or hail?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSeamGaps" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is the roof capable of shedding water as it did prior to the weather event?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSheddingWater" />
-          </div>
-
-          <!-- Composition Shingles -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofCompCheckbox" />
-            <h3 class="font-bold">Composition Shingles</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Identify the number of damaged shingles on wind-facing vs. leeward side
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compDamagedShingles"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How many different slopes of the roof are damaged?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compSlopesDamaged" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How many shingles are damaged in a 100 sq/ft test square?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShinglesTestSquare" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are the shingles able to survive a “brittle test”?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compBrittleTest" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What is the density or weight of the shingles?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShingleDensity" />
-          </div>
-
-          <!-- Single-Ply Membrane -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofSinglePlyCheckbox" />
-            <h3 class="font-bold">Single-Ply Membrane</h3>
-          </div>
-          <div class="space-y-2">
-            <div>
-              <input type="checkbox" class="rounded" id="singleTPO" />
-              <label class="ml-2">TPO</label>
-            </div>
-            <div>
-              <input type="checkbox" class="rounded" id="singleEPDM" />
-              <label class="ml-2">EPDM</label>
-            </div>
-            <div>
-              <input type="checkbox" class="rounded" id="singlePVC" />
-              <label class="ml-2">PVC</label>
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is the membrane fully adhered or mechanically fastened?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleMembraneAttachment" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are there visible penetrations in the membrane?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleVisiblePenetrations" />
-          </div>
-          <!-- Additional Engineer Notes for Single-Ply -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Engineer Notes
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleEngineerNotes"></textarea>
-          </div>
-
-          <!-- Modified Bitumen -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofModBitCheckbox" />
-            <h3 class="font-bold">Modified Bitumen</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is there visible hail damage to the mod-bit?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="modBitHailDamage" />
-          </div>
-
-          <!-- Built Up Roofing w/ Gravel Ballast -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofBURCheckbox" />
-            <h3 class="font-bold">Built Up Roofing w/ Gravel Ballast</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are there “bird nests” present in the gravel ballast?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burBirdNests" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Does the underlying matting show visible hail damage?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burMattingDamage" />
-          </div>
-
-          <!-- Clay Tile Roofing -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofClayTileCheckbox" />
-            <h3 class="font-bold">Clay Tile Roofing</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileManufacturer" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is this a discontinued product?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDiscontinued" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How old is the roof?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How is the tile attached? (e.g. mortar bed, nailed, or both)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAttach" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What is the underlayment? (e.g., rolled roofing, tar paper, synthetic)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileUnderlayment" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is drip edge present?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDripEdge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileShape" />
-          </div>
-
-          <!-- Concrete Tile Roofing -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofConcreteTileCheckbox" />
-            <h3 class="font-bold">Concrete Tile Roofing</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileManufacturer" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Is this a discontinued product?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDiscontinued" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">How old is the roof?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">How is the tile attached?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAttach" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">What is the underlayment?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileUnderlayment" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Is drip edge present?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDripEdge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileShape" />
-          </div>
         </div>
 
         <!-- DAMAGE ASSESSMENT -->
         <div class="space-y-4">
           <h2 class="text-xl font-semibold">Damage Assessment</h2>
+          
           <div class="space-y-2">
             <label class="block text-sm font-medium text-gray-700">Affected Areas</label>
             <div class="grid grid-cols-2 gap-4">
@@ -551,7 +282,7 @@
               id="engineerNotes" 
               rows="4" 
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
-              placeholder="Enter your engineering observations, measurements, and technical specs."
+              placeholder="Enter your engineering observations..."
             ></textarea>
           </div>
         </div>
@@ -577,7 +308,7 @@
           </div>
         </div>
 
-        <!-- Final Buttons at bottom -->
+        <!-- Final Button -->
         <div class="flex space-x-4 mt-6">
           <button 
             type="submit" 
@@ -586,6 +317,7 @@
             Complete Inspection
           </button>
           
+          <!-- Save Inputs button (prompt for filename) -->
           <button 
             type="button" 
             id="saveInputs" 
@@ -595,7 +327,7 @@
           </button>
         </div>
 
-        <!-- Upload JSON for re-filling -->
+        <!-- Upload JSON (to re-fill the form) -->
         <div class="mt-4">
           <label class="block text-sm font-medium text-gray-700 mb-2">
             Or Upload Previously Saved Inputs (JSON)
@@ -773,7 +505,6 @@
   </div>
 
   <script>
-    
     /***************************************************
      * JavaScript for multi-step logic, with rating, JSON
      ***************************************************/
@@ -912,68 +643,14 @@
         engineerName: document.getElementById('engineerName').value,
         engineerEmail: document.getElementById('engineerEmail').value,
         engineerLicense: document.getElementById('engineerLicense').value,
-        engineerPhone: document.getElementById('engineerPhone').value,
-
-        // Additional roofing subcategories, etc. 
-        roofMetalChecked: document.getElementById('roofMetalCheckbox').checked,
-        roofMetalAluminum: document.getElementById('roofMetalAluminum').value,
-        roofMetalGauge: document.getElementById('roofMetalGauge').value,
-        metalPBR: document.getElementById('metalPBR').checked,
-        metalSeam: document.getElementById('metalSeam').checked,
-        metalTrapezoidal: document.getElementById('metalTrapezoidal').checked,
-        metalCorrugated: document.getElementById('metalCorrugated').checked,
-        metalDecra: document.getElementById('metalDecra').checked,
-        metalAluminumShake: document.getElementById('metalAluminumShake').checked,
-        metalOther: document.getElementById('metalOther').checked,
-        metalOtherNotes: document.getElementById('metalOtherNotes').value,
-        pbrShortLapDirection: document.getElementById('pbrShortLapDirection').value,
-        metalSeamGaps: document.getElementById('metalSeamGaps').value,
-        metalSheddingWater: document.getElementById('metalSheddingWater').value,
-
-        roofCompChecked: document.getElementById('roofCompCheckbox').checked,
-        compDamagedShingles: document.getElementById('compDamagedShingles').value,
-        compSlopesDamaged: document.getElementById('compSlopesDamaged').value,
-        compShinglesTestSquare: document.getElementById('compShinglesTestSquare').value,
-        compBrittleTest: document.getElementById('compBrittleTest').value,
-        compShingleDensity: document.getElementById('compShingleDensity').value,
-
-        roofSinglePlyChecked: document.getElementById('roofSinglePlyCheckbox').checked,
-        singleTPO: document.getElementById('singleTPO').checked,
-        singleEPDM: document.getElementById('singleEPDM').checked,
-        singlePVC: document.getElementById('singlePVC').checked,
-        singleMembraneAttachment: document.getElementById('singleMembraneAttachment').value,
-        singleVisiblePenetrations: document.getElementById('singleVisiblePenetrations').value,
-        singleEngineerNotes: document.getElementById('singleEngineerNotes').value,
-
-        roofModBitChecked: document.getElementById('roofModBitCheckbox').checked,
-        modBitHailDamage: document.getElementById('modBitHailDamage').value,
-
-        roofBURChecked: document.getElementById('roofBURCheckbox').checked,
-        burBirdNests: document.getElementById('burBirdNests').value,
-        burMattingDamage: document.getElementById('burMattingDamage').value,
-
-        roofClayTileChecked: document.getElementById('roofClayTileCheckbox').checked,
-        clayTileManufacturer: document.getElementById('clayTileManufacturer').value,
-        clayTileDiscontinued: document.getElementById('clayTileDiscontinued').value,
-        clayTileAge: document.getElementById('clayTileAge').value,
-        clayTileAttach: document.getElementById('clayTileAttach').value,
-        clayTileUnderlayment: document.getElementById('clayTileUnderlayment').value,
-        clayTileDripEdge: document.getElementById('clayTileDripEdge').value,
-        clayTileShape: document.getElementById('clayTileShape').value,
-
-        roofConcreteTileChecked: document.getElementById('roofConcreteTileCheckbox').checked,
-        concreteTileManufacturer: document.getElementById('concreteTileManufacturer').value,
-        concreteTileDiscontinued: document.getElementById('concreteTileDiscontinued').value,
-        concreteTileAge: document.getElementById('concreteTileAge').value,
-        concreteTileAttach: document.getElementById('concreteTileAttach').value,
-        concreteTileUnderlayment: document.getElementById('concreteTileUnderlayment').value,
-        concreteTileDripEdge: document.getElementById('concreteTileDripEdge').value,
-        concreteTileShape: document.getElementById('concreteTileShape').value
+        engineerPhone: document.getElementById('engineerPhone').value
       };
 
+      // Hide the form, show the progress
       document.getElementById('intakeContainer').classList.add('hidden');
       document.getElementById('sectionProgress').classList.remove('hidden');
 
+      // Generate the first section
       try {
         const content = await generateSection(reportSections[0].id);
         generatedSections[reportSections[0].id] = content;
