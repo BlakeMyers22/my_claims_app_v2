@@ -10,6 +10,10 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.10.0",
     "axios": "^1.6.2",
-    "openai": "^4.7.1" 
+    "openai": "^4.7.1"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
+
