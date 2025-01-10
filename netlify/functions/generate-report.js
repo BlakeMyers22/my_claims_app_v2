@@ -6,9 +6,9 @@ const axios = require("axios");
 
 /**
  * If a new model name is placed in Netlify env var FINE_TUNED_MODEL_NAME,
- * we use it. Otherwise, fallback to "gpt-4o-mini-2024-07-18".
+ * we use it. Otherwise, fallback to "gpt-4o-2024-08-06".
  */
-const MODEL_NAME = process.env.FINE_TUNED_MODEL_NAME || "gpt-4o-mini-2024-07-18";
+const MODEL_NAME = process.env.FINE_TUNED_MODEL_NAME || "gpt-4o-2024-08-06";
 
 // Initialize OpenAI
 const configuration = new Configuration({
