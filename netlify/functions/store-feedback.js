@@ -1,24 +1,27 @@
 /******************************************
  * netlify/functions/store-feedback.js
  ******************************************/
-const { createClient } = require('@supabase/supabase-js');
+const { createClient } = require("@supabase/supabase-js");
 
 exports.handler = async function(event) {
-  // CORS
-  if (event.httpMethod === 'OPTIONS') {
+  // Handle preflight for CORS
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
       },
-      body: ''
+      body: "",
     };
   }
 
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method not allowed' };
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: "Method Not Allowed",
+    };
   }
 
   try {
@@ -27,38 +30,44 @@ exports.handler = async function(event) {
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: 'Missing Supabase env vars' })
+        body: JSON.stringify({ error: "Missing Supabase credentials in environment" }),
       };
     }
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
     const body = JSON.parse(event.body);
+    const { sectionId, rating, feedback, generatedText, timestamp } = body;
 
     const { data, error } = await supabase
-      .from('feedback')
-      .insert([{
-        timestamp: body.timestamp,
-        section_id: body.sectionId,
-        rating: body.rating ? parseInt(body.rating, 10) : null,
-        feedback: body.feedback,
-        generated_text: body.generatedText
-      }]);
+      .from("feedback")
+      .insert([
+        {
+          timestamp,
+          section_id: sectionId,
+          rating: rating ? parseInt(rating, 10) : null,
+          feedback: feedback || "",
+          generated_text: generatedText || "",
+        },
+      ]);
 
     if (error) {
-      console.error('Supabase insert error:', error);
-      return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+      console.error("Supabase insert error:", error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: error.message }),
+      };
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true, inserted: data })
+      body: JSON.stringify({ success: true, inserted: data }),
     };
-
   } catch (err) {
-    console.error('store-feedback error:', err);
+    console.error("store-feedback error:", err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message })
+      body: JSON.stringify({ error: err.message }),
     };
   }
 };
